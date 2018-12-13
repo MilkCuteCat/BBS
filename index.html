@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/afquery.js" ></script>
+		<link rel="stylesheet" href="css/common.css" />
+		
+		<!-- 当前用户 user, 所有版面 folders -->
+		<script type="text/javascript" src="user.jsx" ></script>
+		<script type="text/javascript" src="folders.jsx" ></script>
+		
+		<script type="text/javascript" src="index.js" ></script>
+
+	</head>
+	<body>
+		<!-- 顶部区域 -->
+		<div id='top_nav_banner'>
+			<div id='top_nav_wrap'>
+				顶部 bbs log | 用户登录 | 顶菜单
+				<a href="login.html">重新登录</a>
+				<div class='user_nav'>  </div>
+			</div>
+		</div>
+		
+		<div id='bbsdoc'>
+			<div id='left'>
+				<div class='bbs_left_nav'></div>
+			</div>
+			<div id='right'>
+				广告区 <br>
+				通知区 <br>
+			</div>
+			<div id='main' style='min-height: 800px;'>
+				内容区
+			</div>			
+		</div>
+		
+	</body>
+	<script>
+		
+		
+		
+		$(window).scroll( function(){
+			/* 滚动时调整左侧 bbs_left_nav的顶部位置 */
+			var cc = $('#top_nav_banner').height() - $(window).scrollTop()
+			if(cc <0) cc= 0;			
+			$('.bbs_left_nav').css( { 'top':cc +'px' } );
+		})
+		
+		BBS.left_nav.show_folder_list('.bbs_left_nav');
+		
+		BBS.user_nav.refresh('#top_nav_wrap .user_nav');
+		
+	</script>
+</html>

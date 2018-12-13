@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 发贴 </title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/afquery.js" ></script>
+		<script type="text/javascript" src="CheckLoginJS" ></script> 
+		<link rel="stylesheet" href="css/common.css" />
+		
+		<style>
+			.main{
+				width:800px;
+				margin: 10px auto;
+			}
+			.row{
+				margin: 16px 0px;
+			}
+		</style>
+		<script>
+			var folder = ${folderJ};
+		</script>
+		
+	</head>
+	<body>
+		<div class='main'>
+			<div class='location'>	
+				<a href='folder?id=${folder.id}'> ${folder.title} </a> > 发贴
+			</div>
+			<div class='row' >
+				<label class='col' style='width: 50px'> 标题:</label> 
+				<input type='text' class='col title' style='width:calc(100% - 63px)'/>
+			</div>
+			<div class='row'>
+				<label class='col' style='width: 50px'> 内容:</label> 
+				<textarea class='col content' style='width:calc(100% - 65px);height:400px;'></textarea>
+			</div>
+			<div>
+				<label class='col' style='width: 50px'> </label> 
+				<label> 请遵守国家法规 </label>
+				<button onclick='M.submit()' class='submit' style='float: right;'> 发表 </button>
+			</div>
+		</div>
+	</body>
+	
+	<script>
+		var M={};
+		M.submit=function() 
+		{
+			var req = {};
+			req.folder = folder.id;
+			req.title = $('.main .title').val().trim();
+			req.content = $('.main .content').val().trim();
+			if(req.title.length==0 || req.content.length<1) 
+			{
+				alert ('字数不足!');
+				return;
+			}
+			Af.rest('ArticleSave.api', req, function(data){
+				location.href = 'folder?id=' + folder.id;
+			});
+		}
+	</script>
+</html>

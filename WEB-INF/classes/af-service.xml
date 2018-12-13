@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- 示例
+	<service name="Hello" class="my.HelloApi" /> 
+	<upload name="BasicFile" class="my.my.BasicFileUpload" /> 
+	-->
+	
+	<!-- 用户相关  -->
+	<service name="UserLogin" class="my.login.UserLoginApi" /> 
+	<service name="UserLogout" class="my.login.UserLogoutApi" /> 
+	<jsx name="user" class="my.login.UserJSX" />
+	
+	<!-- 栏目相关 -->
+	<jsx name="folders" class="my.folder.FoldersJSX" />
+	<service name="ArticleList" class="my.article.ArticleListApi" /> 
+	
+	<!-- 帖子相关 -->
+	<service name="ArticleSave" class="my.article.ArticleSaveApi" /> 
+
+</config>

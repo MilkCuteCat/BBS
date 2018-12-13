@@ -1,0 +1,92 @@
+
+body{
+	margin: 0px;
+	background: #f8f8f8;
+}
+#top_nav_banner{
+	border-bottom: solid 1px #E7E7E7;
+    background: #F7F7F7;
+    height: 44px;
+    position: relative;
+    z-index: 1000;
+}
+#top_nav_wrap {
+    width: 1000px;
+    height: 45px;
+    margin: 0 auto;
+}
+#bbsdoc {
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 7px;
+}
+#bbsdoc #left{
+	width: 130px;
+    padding: 5px 0 10px;
+    margin-right: 10px;
+    float: left;
+    height: 400px;
+}
+#bbsdoc #right {
+    width: 180px;
+    padding: 7px 0 10px;
+    float: right;
+    overflow: hidden;
+}
+#bbsdoc #main {
+    float: left;
+    padding: 0 0 7px;
+    width: 670px;
+ }
+
+.bbs_left_nav {
+    width: 130px;
+    padding: 5px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 14px;
+    background: #69c;
+    position: fixed;
+    top: 44px;
+    bottom: 0;
+}
+.bbs_left_nav .item {
+	margin: 10px 14px;
+   color: #ccc;
+   font-size: 14px;
+}
+
+.bbs_left_nav .item_link {
+    
+    color: #fff;
+    font-size: 14px;
+    font-family: "宋体";
+    cursor: default;
+    text-decoration: none;
+}
+.bbs_left_nav .item_link:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+#top_nav_wrap .user_nav{
+	float: right;
+}
+
+.row{
+	display: block;
+	margin: 4px 0;
+}
+.col{
+	display: inline-block;
+	vertical-align: top;
+}
+.submit{
+	color: #fff;
+    background: #308ee3;
+    border-radius: 4px;
+    padding: 0 12px;
+    height: 30px;
+    border: 0 none;
+    cursor: pointer;
+}

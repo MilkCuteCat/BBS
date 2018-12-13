@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>${folder.title}</title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/afquery.js" ></script>
+		<link rel="stylesheet" href="css/common.css" />
+		
+		<script type="text/javascript" src="user.jsx" ></script>
+		<script type="text/javascript" src="folders.jsx" ></script>
+		<script type="text/javascript" src="index.js" ></script>
+		<script>
+			var folder = ${folderJ};
+		</script>
+		<style>
+					.main{
+				width: 800px ;
+				margin: 10px auto;
+			}
+			/* 工具按钮区 */
+			.main .toolbar
+			{
+				margin:  10px 0px;
+			}
+			
+			.main .submit{
+				background-color: #188AE2;
+				min-width: 80px;
+				border: 1px solid #eee;
+				padding: 4px;
+				border-radius: 2px;
+				color: #fff;
+			}
+				
+			/* 数据区 */
+			.main .content{
+				display: block;
+				vertical-align: top;
+			}
+			.main .profile{
+				display: inline-block;
+				width: calc(100% - 500px - 10px);
+				vertical-align: top;
+			}
+			
+			/* 无数据时的提示 */
+			.main .content .empty{
+				text-align: center;
+				padding: 4px;
+				display: block;
+				border: 0px solid #888;
+				border-width: 0px 1px 1px 1px;				
+			}
+			.main .table{
+				width: 100%;
+			}
+			/* 数据行 hover时高亮显示 */
+			.main .table .datarow{		
+			}
+			.main .table .datarow:hover{	
+				background-color: #E8F2FE;	
+			}
+			.main .table .selected{	
+				background-color: #E8F2FE;		
+			}
+			
+			/* 列宽设定 */
+			.main .table .c1{ width: 80px; }
+			.main .table .c2{ width: 160px; }
+			.main .table .c3{ width: calc(100% - 360px); }
+			.main .table .c4{ width: 160px; }
+			
+			.toolbar{
+				padding: 4px;
+			    background: #5993cc;
+			    height: 35px;
+			    box-sizing: border-box;
+			}
+			.toolbar .button{
+			    display: inline-block;
+			    width: 62px;
+			    height: 25px;
+			    text-align: center;
+			    color: #444;
+			    font-size: 14px;
+			    line-height: 26px;
+			    overflow: hidden;
+			    border: solid 1px #6a6a69;
+			    background-color: #eee;
+			    text-decoration: none;			    
+			}
+			.toolbar .button:hover{
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 顶部区域 -->
+		<div id='top_nav_banner'>
+			<div id='top_nav_wrap'>
+				顶部 bbs log | 用户登录 | 顶菜单
+				<div class='user_nav'>  </div>
+			</div>
+		</div>
+		
+		<div id='bbsdoc'>
+			<div id='left'>
+				<div class='bbs_left_nav'></div>
+			</div>
+			<div id='right'>
+				广告区 <br>
+				通知区 <br>
+			</div>
+			<div id='main' style='min-height: 800px;'>
+				内容区:正在优化栏目功能
+				<div class="toolbar">
+<a class='button' style='float:right' href='edit?folder=${folder.id}' > 发帖 </a>
+                <div class='main'>
+			<div >
+			</div>
+			
+			<div class='content'>
+				<table class='table'>
+					<thead>
+						<tr>
+							<th class='c1'> # </th>
+							<th class='c2'> 标题 </th>
+							<th class='c3'> 正文 </th>
+							<th class='c5'> 发贴时间 </th>							
+						</tr>
+					</thead>
+					<tbody>						
+					</tbody>
+					
+					<tfoot class='template' style='display: none;'>
+						<!-- 这个tr 作为模板使用 -->
+						<tr>
+							<td style="text-align: center;"> {#id} </td>
+							<td style="text-align: center;"> {#title} </td>
+							<td style="text-align: center;"> {#content} </td>
+							<td style="text-align: center;"> {#timeCreated}</td>							
+						</tr>						
+					</tfoot>
+				</table>
+				<!-- 无数据时才显示这个提示 -->
+				<div class='empty'>
+					没有数据
+				</div>			
+			</div>
+			
+		</div>
+				</div>
+			</div>			
+		</div>
+		
+	</body>
+	<script>
+		
+		
+		
+		$(window).scroll( function(){
+			/* 滚动时调整左侧 bbs_left_nav的顶部位置 */
+			var cc = $('#top_nav_banner').height() - $(window).scrollTop()
+			if(cc <0) cc= 0;			
+			$('.bbs_left_nav').css( { 'top':cc +'px' } );
+		})
+		
+		BBS.left_nav.show_folder_list('.bbs_left_nav');
+		BBS.user_nav.refresh('#top_nav_wrap .user_nav');
+		var M = {};
+		
+		// 初始化
+		M.init = function()
+		{
+			M.reload();
+		}
+		
+		// 加载全部
+		M.reload = function()
+		{
+			// 请求参数
+			var req = {};
+			Af.rest("ArticleList.api", req, function(data){
+				M.showResult(data);
+			});
+		}
+				
+		// 格式化数据并显示
+		M.showResult = function(data)
+		{
+			// 创建一个 AfTemplate对象用于替换
+			var templ = new AfTemplate( $('.template').html());
+			
+			var target = $(".main .content tbody");
+			target.html(""); // 清空
+			for(var row of data)
+			{				
+				target.append( templ.replace(row) );
+			}
+			
+			// 如果没有数据，则把下面的提示显示出来
+			if(data.length > 0) 
+				$(".main .content .empty").hide();
+			else 
+				$(".main .content .empty").show();
+		}
+		
+		
+		
+		M.init();
+	</script>
+</html>
