@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		
+		
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+        <script type="text/javascript" src="js/afquery.js" ></script>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/layout.css" />
+		
+		<style>		
+
+			.form{
+				width: 600px;
+				margin: 5px auto;
+			}
+			
+			.form .input{
+				display: block;
+				padding: 6px;
+				margin: 20px 0px;
+				width: 300px;
+			}
+			.form .verifyCode{
+				width: 300px;
+				padding: 6px;
+			}
+			.form .submit{
+				width: 60px;
+				padding: 6px;
+			}
+			.main{
+				width: 400px;
+				margin: 40px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="register.html"> 用户注册 </a><br />
+		<a href="login.html"> 用户登录 </a>
+		<div class='main'>
+			<label text-align: center; >短信服务已实现见github，网站备案，停止验证码服务</label><br />
+			<div class='form'>
+				<input class='input cellphone' type='text' placeholder="手机号"  />
+				<input class='input password' type='password' placeholder="密码"  />
+				<input class='input password2' type='password' placeholder="重复输入密码"  />
+				<div style='margin: 20px 0px;'>
+					<input class='verifyCode' type='text' /> 
+					<a href='javascript:void(0)' onclick='M.sendVerifyCode()'> 发送验证码 </a>(可不填)
+				</div> 
+				<button class='submit' onclick='M.submit()'> 注册 </button>				
+			</div>	
+
+		</div>
+	</body>
+	<script>
+		var M = {};
+		
+		M.submit = function()
+		{
+			var req = {};
+			req.cellphone = $(".form .cellphone").val().trim();
+			req.password = $(".form .password").val().trim();
+			req.password2 = $(".form .password2").val().trim();
+			req.verifyCode = $(".form .verifyCode").val().trim();
+			if(req.cellphone.length ==0||req.password.length == 0)return;
+			
+			if(req.password != req.password2)
+			{
+				alert("密码不一致!");
+				return;
+			}
+			
+			if(req.cellphone.length !=11)
+			{
+				alert("手机号长度必须为11位!");
+					return;
+}
+//if(req.verifyCode.length != 4)
+//			{
+//				alert("验证码为4位数字!");return;
+//			
+//			}
+			Af.rest("UserRegister.api",req,function(data){
+				location.href = "edit.html";
+			});
+		};
+		
+		M.sendVerifyCode = function()
+		{
+//			var req = {};
+//			req.cellphone = $(".form .cellphone").val().trim();
+//			if(req.cellphone.length != 11)
+//			{
+//				alert("手机号长度必须为11位!");
+//				return;
+//			}
+//			Af.rest("UserSendVerify.api",req,function(data){
+//				alert("短信已经发送！请注意查看！");
+//			});
+		}
+		
+	</script>
+</html>

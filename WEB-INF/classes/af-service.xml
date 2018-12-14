@@ -9,6 +9,10 @@
 	<service name="UserLogin" class="my.login.UserLoginApi" /> 
 	<service name="UserLogout" class="my.login.UserLogoutApi" /> 
 	<jsx name="user" class="my.login.UserJSX" />
+	<service name="UserRegister" class="my.login.UserRegisterApi" /> 
+	<service name="UserSendVerify" class="my.login.UserSendVerifyApi" /> 
+	
+	
 	
 	<!-- 栏目相关 -->
 	<jsx name="folders" class="my.folder.FoldersJSX" />
